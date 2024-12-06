@@ -116,7 +116,10 @@ func traverse(grid [][]rune, start Position) ([]Position, bool) {
 func createsLoop(grid [][]rune, path []Position, start Position) []bool {
 	c := make(chan bool)
 
-	for _, pos := range path {
+	for idx, pos := range path {
+		if idx != 0 {
+			start = path[idx-1]
+		}
 		go simulateMovementWithObstacle(grid, pos, start, c)
 	}
 
