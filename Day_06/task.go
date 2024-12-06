@@ -114,12 +114,9 @@ func traverse(grid [][]rune, start Position) ([]Position, bool) {
 }
 
 func createsLoop(grid [][]rune, path []Position, start Position) []bool {
-	// Start async channel
 	c := make(chan bool)
 
-	// Iteriere durch alle Positionen im Pfad
 	for _, pos := range path {
-		// Simuliere das Hinzufügen eines Hindernisses an der aktuellen Position
 		go simulateMovementWithObstacle(grid, pos, start, c)
 	}
 
@@ -132,11 +129,9 @@ func createsLoop(grid [][]rune, path []Position, start Position) []bool {
 }
 
 func simulateMovementWithObstacle(grid [][]rune, obstaclePos Position, start Position, c chan bool) {
-	// Temporäres Hindernis setzen
 	tempGrid := copySlice(grid)
 	tempGrid[obstaclePos.row][obstaclePos.col] = '#'
 
-	// Simulation starten
 	_, loopDetected := traverse(tempGrid, start)
 
 	c <- loopDetected
@@ -180,7 +175,6 @@ func printGrid(grid [][]rune) {
 }
 
 func main() {
-	// Datei öffnen
 	file, err := os.Open("input")
 	if err != nil {
 		fmt.Println("Fehler beim Öffnen der Datei:", err)
@@ -188,13 +182,12 @@ func main() {
 	}
 	defer file.Close()
 
-	// Scanner für Zeilenweises Einlesen
 	scanner := bufio.NewScanner(file)
 	var array [][]rune
 
 	for scanner.Scan() {
-		line := scanner.Text()     // Eine Zeile als String
-		characters := []rune(line) // String in Runen (Buchstaben) zerlegen
+		line := scanner.Text()
+		characters := []rune(line)
 		array = append(array, characters)
 	}
 
